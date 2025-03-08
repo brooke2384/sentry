@@ -1,0 +1,48 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin" // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
+    id 'com.google.gms.google-services' // Ensure this is applied after the Flutter plugin
+}
+
+android {
+    namespace = "greatestinteractive.com.response"
+    compileSdk = flutter.compileSdkVersion
+    ndkVersion = flutter.ndkVersion
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        applicationId = "greatestinteractive.com.response"
+        minSdk = 23 // Use the Flutter defined version
+        targetSdk = flutter.targetSdkVersion // Use the Flutter defined version
+        versionCode = flutter.versionCode
+        versionName = flutter.versionName
+    }
+
+    buildTypes {
+        release {
+            signingConfig = signingConfigs.debug // Update this with your release signing config
+        }
+    }
+}
+
+flutter {
+    source = "../.."
+}
+
+dependencies {
+    // Firebase BOM for dependency management
+    implementation platform('com.google.firebase:firebase-bom:33.4.0') // Use the latest compatible version
+    implementation 'com.google.firebase:firebase-analytics' // Add any other Firebase dependencies you need
+
+    // Add other dependencies here
+}
