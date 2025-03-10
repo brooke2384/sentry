@@ -1,16 +1,47 @@
-# responda
+# 🚨 Sentry – Real-Time Emergency Coordination App  
+🔗 **Live Demo:** Coming Soon  
+📜 **License:** MIT  
 
-Fast sentry service
+## 📌 Overview  
+Sentry is a **real-time emergency response application** designed to coordinate urgent incidents efficiently. Built with **Flutter and Firebase**, it enables instant **alerts, location tracking, and dispatch coordination** for emergency teams.
 
-## Getting Started
+## ⚡ Key Features  
+- **Real-Time Incident Reporting** – Users can report emergencies with location data.  
+- **Live Dispatch & Coordination** – Incident updates in real-time.  
+- **Geo-Location Tracking** – Maps integration for precision routing.  
+- **Scalable Architecture** – Optimized Firebase backend for speed & reliability.  
+- **Secure Authentication** – Google & Biometric login for fast access.  
 
-This project is a starting point for a Flutter application.
+## 🛠 Tech Stack  
+- **Frontend:** Flutter (Dart)  
+- **Backend:** Firebase (Firestore, Cloud Functions)  
+- **Location Services:** Google Maps API  
+- **State Management:** Riverpod  
+- **Push Notifications:** Firebase Cloud Messaging  
 
-A few resources to get you started if this is your first Flutter project:
+## 🏗 Installation & Setup  
+1. **Clone the repository:**  
+   ```sh
+   git clone https://github.com/brooke2384/sentry.git
+   cd sentry
+   ```  
+2. **Install dependencies:**  
+   ```sh
+   flutter pub get
+   ```  
+3. **Run the application:**  
+   ```sh
+   flutter run
+   ```  
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 🧪 Testing  
+Run unit and integration tests:  
+```sh
+flutter test
+```  
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🚀 Future Enhancements  
+- **AI-Driven Incident Prioritization** – Automating emergency severity assessment.  
+- **Offline Mode** – Ensuring reliability in areas with low connectivity.  
+- **Multi-Agency Integration** – Coordination between different emergency services.  
+
