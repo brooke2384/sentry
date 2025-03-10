@@ -3,15 +3,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:response/profile_page.dart';
-import 'package:response/responda_profile.dart';
-import 'package:response/responda_settings.dart';
-import 'package:response/settings_page.dart';
+import 'package:sentry/profile_page.dart';
+import 'package:sentry/responda_profile.dart';
+import 'package:sentry/responda_settings.dart';
+import 'package:sentry/settings_page.dart';
 
 class LocationScreen extends StatefulWidget {
   final LocationData? userLocation;
 
-  const LocationScreen({Key? key, this.userLocation}) : super(key: key);
+  const LocationScreen({super.key, this.userLocation});
 
   @override
   _LocationScreenState createState() => _LocationScreenState();
@@ -36,29 +36,30 @@ class _LocationScreenState extends State<LocationScreen> {
 
   Future<void> _getCurrentLocation() async {
     // Request location permissions and fetch location data
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
+    bool serviceEnabled;
+    PermissionStatus permissionGranted;
 
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
+    serviceEnabled = await location.serviceEnabled();
+    if (!serviceEnabled) {
+      serviceEnabled = await location.requestService();
+      if (!serviceEnabled) {
         return;
       }
     }
 
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
+    permissionGranted = await location.hasPermission();
+    if (permissionGranted == PermissionStatus.denied) {
+      permissionGranted = await location.requestPermission();
+      if (permissionGranted != PermissionStatus.granted) {
         return;
       }
     }
 
     LocationData currentLocation = await location.getLocation();
     setState(() {
-      markerPosition = LatLng(currentLocation.latitude ?? 0.0, currentLocation.longitude ?? 0.0);
-      if (mapController != null && markerPosition != null) {
+      markerPosition = LatLng(
+          currentLocation.latitude ?? 0.0, currentLocation.longitude ?? 0.0);
+      if (markerPosition != null) {
         mapController.moveCamera(CameraUpdate.newLatLng(markerPosition!));
       }
     });
@@ -108,7 +109,8 @@ class _LocationScreenState extends State<LocationScreen> {
         leading: IconButton(
           icon: Icon(Icons.menu, color: Colors.grey[800]),
           onPressed: () {
-            _scaffoldKey.currentState!.openDrawer(); // Use the GlobalKey to open the drawer
+            _scaffoldKey.currentState!
+                .openDrawer(); // Use the GlobalKey to open the drawer
           },
         ),
         actions: [
@@ -118,7 +120,8 @@ class _LocationScreenState extends State<LocationScreen> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const ProfilePage()),
+                    MaterialPageRoute(
+                        builder: (context) => const ProfilePage()),
                   );
                 },
                 child: Text(
@@ -173,7 +176,8 @@ class _LocationScreenState extends State<LocationScreen> {
               title: const Text('LOGOUT'),
               onTap: () async {
                 await FirebaseAuth.instance.signOut();
-                Navigator.pushReplacementNamed(context, '/login'); // Redirect to login screen after logout
+                Navigator.pushReplacementNamed(
+                    context, '/login'); // Redirect to login screen after logout
               },
             ),
           ],
@@ -199,14 +203,15 @@ class _LocationScreenState extends State<LocationScreen> {
                   const SizedBox(height: 16),
 
                   // Google Map
-                  Container(
+                  SizedBox(
                     height: MediaQuery.of(context).size.height * 0.45,
                     width: double.infinity,
                     child: GoogleMap(
                       onMapCreated: (GoogleMapController controller) {
                         mapController = controller;
                         if (markerPosition != null) {
-                          mapController.moveCamera(CameraUpdate.newLatLng(markerPosition!));
+                          mapController.moveCamera(
+                              CameraUpdate.newLatLng(markerPosition!));
                         }
                       },
                       initialCameraPosition: CameraPosition(
@@ -215,17 +220,17 @@ class _LocationScreenState extends State<LocationScreen> {
                       ),
                       markers: markerPosition != null
                           ? {
-                        Marker(
-                          markerId: const MarkerId('userLocation'),
-                          position: markerPosition!,
-                          draggable: true,
-                          onDragEnd: (newPosition) {
-                            setState(() {
-                              markerPosition = newPosition;
-                            });
-                          },
-                        ),
-                      }
+                              Marker(
+                                markerId: const MarkerId('userLocation'),
+                                position: markerPosition!,
+                                draggable: true,
+                                onDragEnd: (newPosition) {
+                                  setState(() {
+                                    markerPosition = newPosition;
+                                  });
+                                },
+                              ),
+                            }
                           : {},
                       onTap: (LatLng position) {
                         setState(() {
@@ -238,7 +243,8 @@ class _LocationScreenState extends State<LocationScreen> {
 
                   // Display user's current location
                   Container(
-                    padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 16, horizontal: 20),
                     decoration: BoxDecoration(
                       color: Colors.teal.shade100,
                       borderRadius: BorderRadius.circular(10),
@@ -260,7 +266,8 @@ class _LocationScreenState extends State<LocationScreen> {
                                 markerPosition != null
                                     ? 'Lat: ${markerPosition!.latitude}, Lng: ${markerPosition!.longitude}'
                                     : 'Location not available',
-                                style: TextStyle(fontSize: 14, color: Colors.black54),
+                                style: TextStyle(
+                                    fontSize: 14, color: Colors.black54),
                               ),
                             ],
                           ),
@@ -274,7 +281,8 @@ class _LocationScreenState extends State<LocationScreen> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
             child: SizedBox(
               width: double.infinity,
               child: ElevatedButton(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:response/sign_up.dart';
-import 'package:response/verify_identity_screen.dart';
+import 'package:sentry/sign_up.dart';
+import 'package:sentry/verify_identity_screen.dart';
 import 'otp_verification_screen.dart'; // Import the new screen
 import 'package:google_sign_in/google_sign_in.dart'; // Google Sign-In
 import 'package:http/http.dart' as http;
@@ -28,17 +28,18 @@ class _EnterMobileScreenState extends State<EnterMobileScreen> {
       final phoneNumber = '$selectedCountryCode$mobileNumber';
 
       final url = Uri.parse('https://responda.frobyte.ke/api/v1/users/');
-      final response = await http.post(
+      final sentry = await http.post(
         url,
         headers: {'Content-Type': 'application/json'},
         body: json.encode({'phoneNumber': phoneNumber}),
       );
 
-      if (response.statusCode == 200) {
+      if (sentry.statusCode == 200) {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => OTPVerificationScreen(phoneNumber: phoneNumber),
+            builder: (context) =>
+                OTPVerificationScreen(phoneNumber: phoneNumber),
           ),
         );
       } else {
@@ -60,7 +61,8 @@ class _EnterMobileScreenState extends State<EnterMobileScreen> {
       if (googleUser == null) {
         return; // User canceled the sign-in
       }
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
       // Here you can call your custom API with googleAuth info if needed.
 
       _showSuccessDialog();
@@ -106,7 +108,8 @@ class _EnterMobileScreenState extends State<EnterMobileScreen> {
                 Navigator.pop(context); // Close the dialog
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => const VerifyIdentityScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => const VerifyIdentityScreen()),
                 );
               },
               child: const Text(
@@ -269,7 +272,8 @@ class _EnterMobileScreenState extends State<EnterMobileScreen> {
                       Flexible(
                         flex: 2,
                         child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 4),
                           decoration: BoxDecoration(
                             color: Colors.grey[200],
                             borderRadius: BorderRadius.circular(8),
@@ -298,7 +302,8 @@ class _EnterMobileScreenState extends State<EnterMobileScreen> {
                       Flexible(
                         flex: 3,
                         child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 4),
                           decoration: BoxDecoration(
                             color: Colors.grey[200],
                             borderRadius: BorderRadius.circular(8),
@@ -325,12 +330,13 @@ class _EnterMobileScreenState extends State<EnterMobileScreen> {
                   SizedBox(
                     width: double.infinity, // Make button full-width
                     child: ElevatedButton(
-
-
-                      onPressed: _verifyMobileNumber, // Trigger OTP verification
+                      onPressed:
+                          _verifyMobileNumber, // Trigger OTP verification
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF06413D), // Updated background color
-                        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                        backgroundColor:
+                            const Color(0xFF06413D), // Updated background color
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 32, vertical: 12),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -362,7 +368,8 @@ class _EnterMobileScreenState extends State<EnterMobileScreen> {
                   // Divider line with "OR" in the middle
                   const Row(
                     children: [
-                      Expanded(child: Divider(
+                      Expanded(
+                          child: Divider(
                         thickness: 2,
                         color: Color(0xFF06413D),
                       )),
@@ -377,7 +384,8 @@ class _EnterMobileScreenState extends State<EnterMobileScreen> {
                           ),
                         ),
                       ),
-                      Expanded(child: Divider(
+                      Expanded(
+                          child: Divider(
                         thickness: 2,
                         color: Color(0xFF06413D),
                       )),
@@ -406,7 +414,8 @@ class _EnterMobileScreenState extends State<EnterMobileScreen> {
                       ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.grey[300],
-                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 24, vertical: 12),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
@@ -437,7 +446,8 @@ class _EnterMobileScreenState extends State<EnterMobileScreen> {
                       ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.grey[300], // Grey background
-                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 24, vertical: 12),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
@@ -448,7 +458,10 @@ class _EnterMobileScreenState extends State<EnterMobileScreen> {
                   const SizedBox(height: 16),
 
                   // Another divider line
-                  const Divider(thickness: 2, color: Color(0xFF06413D),),
+                  const Divider(
+                    thickness: 2,
+                    color: Color(0xFF06413D),
+                  ),
 
                   const SizedBox(height: 16),
                   const Center(

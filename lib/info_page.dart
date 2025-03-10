@@ -1,8 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; // For date formatting
-import 'package:response/repositories/user_repository.dart';
-import 'dart:convert'; // For JSON encoding/decoding
+import 'package:sentry/repositories/user_repository.dart';
+// For JSON encoding/decoding
 import 'allergies_page.dart';
 import 'models/user_model.dart'; // Import the AllergyPage
 

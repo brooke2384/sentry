@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:response/profile_page.dart';
-import 'package:response/settings_page.dart';
-import 'package:response/thank_you_screen.dart';
+import 'package:sentry/profile_page.dart';
+import 'package:sentry/thank_you_screen.dart';
 
 class ArrivalScreen extends StatelessWidget {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(); // Create a scaffold key
+  final GlobalKey<ScaffoldState> _scaffoldKey =
+      GlobalKey<ScaffoldState>(); // Create a scaffold key
 
   ArrivalScreen({super.key}); // Remove 'const' keyword from the constructor
 
@@ -31,7 +31,8 @@ class ArrivalScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const ProfilePage()),
+                    MaterialPageRoute(
+                        builder: (context) => const ProfilePage()),
                   );
                 },
                 child: Text(
@@ -84,7 +85,8 @@ class ArrivalScreen extends StatelessWidget {
               title: const Text('LOGOUT'),
               onTap: () async {
                 await FirebaseAuth.instance.signOut();
-                Navigator.pushReplacementNamed(context, '/login'); // Redirect to login screen after logout
+                Navigator.pushReplacementNamed(
+                    context, '/login'); // Redirect to login screen after logout
               },
             ),
           ],
@@ -103,9 +105,11 @@ class ArrivalScreen extends StatelessWidget {
                 bottomRight: Radius.circular(20.0),
               ),
             ),
-            padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 12.0), // Start lower
+            padding: const EdgeInsets.only(
+                left: 16.0, right: 16.0, bottom: 12.0), // Start lower
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween, // Adjusted alignment
+              mainAxisAlignment:
+                  MainAxisAlignment.spaceBetween, // Adjusted alignment
               children: [
                 const Spacer(), // Push content to the bottom
                 const Row(
@@ -153,7 +157,8 @@ class ArrivalScreen extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(16.0),
               decoration: BoxDecoration(
-                color: const Color(0xFFABC5C9), // Background color for location container
+                color: const Color(
+                    0xFFABC5C9), // Background color for location container
                 borderRadius: BorderRadius.circular(12.0),
               ),
               child: const Row(
@@ -207,7 +212,8 @@ class ArrivalScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: ConstrainedBox(
-              constraints: const BoxConstraints.tightFor(width: double.infinity),
+              constraints:
+                  const BoxConstraints.tightFor(width: double.infinity),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF05403C), // Button color
@@ -224,7 +230,8 @@ class ArrivalScreen extends StatelessWidget {
                 },
                 child: const Text(
                   'Close Request',
-                  style: TextStyle(fontSize: 18.0, color: Colors.white), // White text
+                  style: TextStyle(
+                      fontSize: 18.0, color: Colors.white), // White text
                 ),
               ),
             ),
@@ -239,7 +246,8 @@ class ArrivalScreen extends StatelessWidget {
         child: SizedBox(
           height: 48, // Adjust the height of the bottom bar
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align items to far left and right
+            mainAxisAlignment: MainAxisAlignment
+                .spaceBetween, // Align items to far left and right
             children: [
               IconButton(
                 icon: Image.asset(

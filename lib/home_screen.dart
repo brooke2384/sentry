@@ -93,9 +93,9 @@ class _HomeScreenState extends State<HomeScreen> {
         // Extract the username and profile image URL from the user details
         _userid = userDetails['id'];
         _username =
-            userDetails['username']; // Adjust key based on your API response
+            userDetails['username']; // Adjust key based on your API sentry
         _profileImageUrl =
-            userDetails['image']; // Adjust key based on your API response
+            userDetails['image']; // Adjust key based on your API sentry
       } else {
         // Handle the case where user data is not available
         ScaffoldMessenger.of(context).showSnackBar(
@@ -108,15 +108,15 @@ class _HomeScreenState extends State<HomeScreen> {
       // _profileImageUrl =
       // print(token);
 
-      // final response = await http.get(
+      // final sentry = await http.get(
       //   Uri.parse('https://responda.frobyte.ke/api/v1/users/'),
       //   headers: {
       //     'Authorization': 'Bearer $token',
       //   },
       // );
-      // print(response.body);
-      // if (response.statusCode == 200) {
-      //   final data = json.decode(response.body);
+      // print(sentry.body);
+      // if (sentry.statusCode == 200) {
+      //   final data = json.decode(sentry.body);
       //   setState(() {
       //     _username = data[0]['username'] ?? 'User';
       //     _profileImageUrl = data[0]['image'] ?? 'assets/icons/user.png';
@@ -158,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
           };
 
           // Send distress signal to the server
-          final response = await https.post(
+          final sentry = await https.post(
             Uri.parse(
                 'https://responda.frobyte.ke/api/v1/alert-requests/'), // API endpoint
             headers: {
@@ -169,11 +169,11 @@ class _HomeScreenState extends State<HomeScreen> {
             body: json.encode(distressData), // Send distress data as JSON
           );
 
-          print(response);
-          print(response.statusCode);
-          print(response.body);
-          // Handle response
-          if (response.statusCode == 200 || response.statusCode == 201) {
+          print(sentry);
+          print(sentry.statusCode);
+          print(sentry.body);
+          // Handle sentry
+          if (sentry.statusCode == 200 || sentry.statusCode == 201) {
             print("Distress signal sent!");
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Distress signal sent!')),
@@ -333,7 +333,7 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 8),
 
             // Google Map showing user's current location
-            Container(
+            SizedBox(
               height: 300,
               width: double.infinity,
               child: _buildMap(),

@@ -25,10 +25,11 @@ class _MedicalProfilePageState extends State<MedicalProfilePage> {
   // Function to fetch medical data from custom API
   Future<void> _fetchMedicalData() async {
     try {
-      final response = await http.get(Uri.parse('https://responda.frobyte.ke/api/v1/profiles/'));
+      final sentry = await http
+          .get(Uri.parse('https://responda.frobyte.ke/api/v1/profiles/'));
 
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
+      if (sentry.statusCode == 200) {
+        final data = json.decode(sentry.body);
         setState(() {
           _allergiesController.text = data['allergy_type'] ?? '';
           _medicationsController.text = data['maintenance_medicine_type'] ?? '';
@@ -45,7 +46,7 @@ class _MedicalProfilePageState extends State<MedicalProfilePage> {
   // Function to update medical data using custom API
   Future<void> _updateMedicalData() async {
     try {
-      final response = await http.put(
+      final sentry = await http.put(
         Uri.parse('https://your-api-endpoint.com/api/update-medical-profile'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
@@ -55,12 +56,13 @@ class _MedicalProfilePageState extends State<MedicalProfilePage> {
         }),
       );
 
-      if (response.statusCode == 200) {
+      if (sentry.statusCode == 200) {
         setState(() {
           _isEditing = false; // Exit edit mode after saving
         });
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Medical information updated successfully!')),
+          const SnackBar(
+              content: Text('Medical information updated successfully!')),
         );
       } else {
         throw Exception('Failed to update medical data');
@@ -118,7 +120,8 @@ class _MedicalProfilePageState extends State<MedicalProfilePage> {
               controller: _allergiesController,
               enabled: _isEditing, // Enable/disable based on edit mode
               decoration: InputDecoration(
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
                 filled: !_isEditing,
                 fillColor: _isEditing ? null : Colors.grey[200],
               ),
@@ -139,7 +142,8 @@ class _MedicalProfilePageState extends State<MedicalProfilePage> {
               controller: _medicationsController,
               enabled: _isEditing,
               decoration: InputDecoration(
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
                 filled: !_isEditing,
                 fillColor: _isEditing ? null : Colors.grey[200],
               ),
@@ -160,7 +164,8 @@ class _MedicalProfilePageState extends State<MedicalProfilePage> {
               controller: _bloodTypeController,
               enabled: _isEditing,
               decoration: InputDecoration(
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
                 filled: !_isEditing,
                 fillColor: _isEditing ? null : Colors.grey[200],
               ),
@@ -186,10 +191,13 @@ class _MedicalProfilePageState extends State<MedicalProfilePage> {
                     horizontal: 24.0,
                   ),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8), // Border radius of 8
+                    borderRadius:
+                        BorderRadius.circular(8), // Border radius of 8
                   ),
                 ),
-                child: Text(_isEditing ? 'Save Medical Information' : 'Edit Medical Information'),
+                child: Text(_isEditing
+                    ? 'Save Medical Information'
+                    : 'Edit Medical Information'),
               ),
             ),
           ],

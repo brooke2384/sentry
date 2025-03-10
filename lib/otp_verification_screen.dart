@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:response/verify_identity_screen.dart';
+import 'package:sentry/verify_identity_screen.dart';
 
 class OTPVerificationScreen extends StatefulWidget {
   final String phoneNumber; // Accept phone number from previous screen
@@ -36,13 +36,13 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
     });
 
     final url = Uri.parse('https://responda.frobyte.ke/api/v1/users/');
-    final response = await http.post(
+    final sentry = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
       body: json.encode({'phoneNumber': widget.phoneNumber}),
     );
 
-    if (response.statusCode == 200) {
+    if (sentry.statusCode == 200) {
       setState(() {
         isResending = false;
       });
@@ -80,7 +80,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
 
     if (enteredOTP.isNotEmpty) {
       final url = Uri.parse('https://responda.frobyte.ke/api/v1/users/');
-      final response = await http.post(
+      final sentry = await http.post(
         url,
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
@@ -89,9 +89,9 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
         }),
       );
 
-      if (response.statusCode == 200) {
-        final jsonResponse = jsonDecode(response.body);
-        if (jsonResponse['success']) {
+      if (sentry.statusCode == 200) {
+        final jsonsentry = jsonDecode(sentry.body);
+        if (jsonsentry['success']) {
           // OTP verification successful, navigate to the next screen
           Navigator.push(
             context,
@@ -102,7 +102,8 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
         } else {
           // Show error message if OTP verification failed
           setState(() {
-            errorMessage = jsonResponse['message'] ?? 'Incorrect OTP, please try again.';
+            errorMessage =
+                jsonsentry['message'] ?? 'Incorrect OTP, please try again.';
           });
         }
       } else {
@@ -249,7 +250,8 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    padding: const EdgeInsets.symmetric(horizontal: 140, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 140, vertical: 12),
                   ),
                   child: const Text(
                     'CONTINUE',

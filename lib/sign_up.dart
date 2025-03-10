@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:response/verify_identity_screen.dart';
-import 'package:response/login_page.dart';
+import 'package:sentry/verify_identity_screen.dart';
+import 'package:sentry/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart'; // Import Firebase Auth
-
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -80,7 +79,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 Navigator.pop(context);
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => const VerifyIdentityScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => const VerifyIdentityScreen()),
                 );
               },
               child: const Text(
@@ -102,7 +102,8 @@ class _SignUpPageState extends State<SignUpPage> {
     if (_formKey.currentState!.validate()) {
       try {
         // Firebase signup
-        UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+        UserCredential userCredential =
+            await _auth.createUserWithEmailAndPassword(
           email: email,
           password: password,
         );
@@ -459,7 +460,8 @@ class _SignUpPageState extends State<SignUpPage> {
                     onPressed: () {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => const LoginPage()),
+                        MaterialPageRoute(
+                            builder: (context) => const LoginPage()),
                       );
                     },
                     child: const Text(

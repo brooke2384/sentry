@@ -1,6 +1,6 @@
 # responda
 
-Fast response service
+Fast sentry service
 
 ## Getting Started
 

@@ -1,7 +1,6 @@
 // screens/success_screen.dart
 import 'package:flutter/material.dart';
-import 'package:response/responda_home.dart';
-import 'info_page.dart';
+import 'package:sentry/responda_home.dart';
 
 class RespondaSuccess extends StatelessWidget {
   const RespondaSuccess({super.key});
@@ -16,7 +15,8 @@ class RespondaSuccess extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.end, // Align logo to the right
+              mainAxisAlignment:
+                  MainAxisAlignment.end, // Align logo to the right
               children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0, right: 8.0),
@@ -95,13 +95,16 @@ class RespondaSuccess extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const RespondaHomeScreen(), // Replace with actual screen
+                  builder: (context) =>
+                      const RespondaHomeScreen(), // Replace with actual screen
                 ),
               );
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFFD0DB27), // Updated background color
-              padding: const EdgeInsets.symmetric(horizontal: 140, vertical: 12),
+              backgroundColor:
+                  const Color(0xFFD0DB27), // Updated background color
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 140, vertical: 12),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),

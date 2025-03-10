@@ -5,7 +5,7 @@ buildscript {
     }
     dependencies {
         // Android Gradle Plugin
-        classpath 'com.android.tools.build:gradle:8.0.2' // Ensure compatibility with your Flutter version
+        classpath 'com.android.tools.build:gradle:8.0.2' // Ensure compatibility with Flutter
         classpath 'com.google.gms:google-services:4.4.2' // Google Services for Firebase
     }
 }
@@ -17,6 +17,7 @@ allprojects {
     }
 }
 
+// Keep this for Gradle build management
 rootProject.buildDir = "../build"
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
@@ -25,6 +26,7 @@ subprojects {
     project.evaluationDependsOn(":app")
 }
 
+// Clean Task
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }

@@ -20,7 +20,7 @@ class _AllergyPageState extends State<AllergyPage> {
   // Function to save allergy data using the custom API
   Future<void> _saveAllergyData() async {
     try {
-      final response = await http.post(
+      final sentry = await http.post(
         Uri.parse(_apiEndpoint),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
@@ -29,7 +29,7 @@ class _AllergyPageState extends State<AllergyPage> {
         }),
       );
 
-      if (response.statusCode != 200) {
+      if (sentry.statusCode != 200) {
         throw Exception('Failed to save data');
       }
     } catch (e) {
@@ -44,7 +44,8 @@ class _AllergyPageState extends State<AllergyPage> {
 
   // Handle saving allergy info and navigate to the next page
   Future<void> _proceedToNextPage() async {
-    if (hasAllergies == null || (hasAllergies == 'Yes' && allergyType.isEmpty)) {
+    if (hasAllergies == null ||
+        (hasAllergies == 'Yes' && allergyType.isEmpty)) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Please complete the form before proceeding.'),
@@ -72,7 +73,8 @@ class _AllergyPageState extends State<AllergyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200], // Light grey background for the entire page
+      backgroundColor:
+          Colors.grey[200], // Light grey background for the entire page
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -93,7 +95,8 @@ class _AllergyPageState extends State<AllergyPage> {
                   child: LinearProgressIndicator(
                     value: 0.3333, // 33.33% progress
                     backgroundColor: Colors.grey[300],
-                    valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF06413D)),
+                    valueColor:
+                        const AlwaysStoppedAnimation<Color>(Color(0xFF06413D)),
                   ),
                 ),
               ),
@@ -106,7 +109,8 @@ class _AllergyPageState extends State<AllergyPage> {
               },
               child: const Text(
                 "Skip",
-                style: TextStyle(color: Color(0xFF06413D), fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: Color(0xFF06413D), fontWeight: FontWeight.bold),
               ),
             ),
           ],
@@ -125,7 +129,10 @@ class _AllergyPageState extends State<AllergyPage> {
                   // Question Text
                   const Text(
                     "Do you have any allergies?",
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xFF05403C)), // Updated color
+                    style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF05403C)), // Updated color
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 30),
@@ -139,32 +146,49 @@ class _AllergyPageState extends State<AllergyPage> {
                           });
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: hasAllergies == 'Yes' ? const Color(0xFFBCCE2A) : Colors.grey[300],
-                          padding: const EdgeInsets.symmetric(vertical: 12), // Reduced height
-                          minimumSize: const Size(double.infinity, 55), // Slightly reduced button size
+                          backgroundColor: hasAllergies == 'Yes'
+                              ? const Color(0xFFBCCE2A)
+                              : Colors.grey[300],
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 12), // Reduced height
+                          minimumSize: const Size(double.infinity,
+                              55), // Slightly reduced button size
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0), // Rounded corners
+                            borderRadius:
+                                BorderRadius.circular(8.0), // Rounded corners
                           ),
                         ),
-                        child: const Text('YES', style: TextStyle(color: Colors.black, fontSize: 16)), // Slightly reduced font
+                        child: const Text('YES',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16)), // Slightly reduced font
                       ),
                       const SizedBox(height: 20),
                       ElevatedButton(
                         onPressed: () {
                           setState(() {
                             hasAllergies = 'No';
-                            allergyType = ''; // Clear allergy type if "No" is selected
+                            allergyType =
+                                ''; // Clear allergy type if "No" is selected
                           });
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: hasAllergies == 'No' ? const Color(0xFFBCCE2A) : Colors.grey[300],
-                          padding: const EdgeInsets.symmetric(vertical: 12), // Reduced height
-                          minimumSize: const Size(double.infinity, 55), // Slightly reduced button size
+                          backgroundColor: hasAllergies == 'No'
+                              ? const Color(0xFFBCCE2A)
+                              : Colors.grey[300],
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 12), // Reduced height
+                          minimumSize: const Size(double.infinity,
+                              55), // Slightly reduced button size
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0), // Rounded corners
+                            borderRadius:
+                                BorderRadius.circular(8.0), // Rounded corners
                           ),
                         ),
-                        child: const Text('NO', style: TextStyle(color: Colors.black, fontSize: 16)), // Slightly reduced font
+                        child: const Text('NO',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16)), // Slightly reduced font
                       ),
                     ],
                   ),
@@ -179,11 +203,13 @@ class _AllergyPageState extends State<AllergyPage> {
                           filled: true,
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8.0), // Slight border radius (matches buttons)
+                            borderRadius: BorderRadius.circular(
+                                8.0), // Slight border radius (matches buttons)
                             borderSide: BorderSide.none, // No border outline
                           ),
                         ),
-                        style: const TextStyle(color: Color(0xFF05403C)), // Set text color
+                        style: const TextStyle(
+                            color: Color(0xFF05403C)), // Set text color
                         minLines: 6, // Increase input height
                         maxLines: 10, // Allow multiple lines
                         onChanged: (value) {
@@ -196,24 +222,32 @@ class _AllergyPageState extends State<AllergyPage> {
                   const SizedBox(height: 40),
                   // Continue Button (Sticky to the bottom)
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 20.0), // Padding for button
+                    padding: const EdgeInsets.only(
+                        bottom: 20.0), // Padding for button
                     child: SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFBCCE2A), // Background color
-                          padding: const EdgeInsets.symmetric(vertical: 15), // Reduced padding
+                          backgroundColor:
+                              const Color(0xFFBCCE2A), // Background color
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 15), // Reduced padding
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8), // Slight border radius
+                            borderRadius: BorderRadius.circular(
+                                8), // Slight border radius
                           ),
                         ),
-                        onPressed: _isLoading ? null : _proceedToNextPage, // Show loading and proceed
+                        onPressed: _isLoading
+                            ? null
+                            : _proceedToNextPage, // Show loading and proceed
                         child: _isLoading
-                            ? const CircularProgressIndicator(color: Colors.white)
+                            ? const CircularProgressIndicator(
+                                color: Colors.white)
                             : const Text(
-                          'CONTINUE',
-                          style: TextStyle(fontSize: 16, color: Color(0xFF05403C)),
-                        ),
+                                'CONTINUE',
+                                style: TextStyle(
+                                    fontSize: 16, color: Color(0xFF05403C)),
+                              ),
                       ),
                     ),
                   ),

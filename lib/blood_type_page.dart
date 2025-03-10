@@ -16,20 +16,21 @@ class _BloodTypePageState extends State<BloodTypePage> {
 
   // Save blood type data to the custom API (in background)
   Future<bool> _saveBloodType() async {
-    final url = Uri.parse('https://responda.frobyte.ke/api/v1/profiles/'); // Replace with your API endpoint
+    final url = Uri.parse(
+        'https://responda.frobyte.ke/api/v1/profiles/'); // Replace with your API endpoint
     final Map<String, dynamic> body = {
       'blood_type': selectedBloodType ?? 'Unknown',
       'timestamp': DateTime.now().toIso8601String(), // Current timestamp
     };
 
     try {
-      final response = await http.post(
+      final sentry = await http.post(
         url,
         headers: {'Content-Type': 'application/json'},
         body: json.encode(body),
       );
 
-      if (response.statusCode == 200) {
+      if (sentry.statusCode == 200) {
         // Data saved successfully
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -117,7 +118,8 @@ class _BloodTypePageState extends State<BloodTypePage> {
                   child: LinearProgressIndicator(
                     value: 0.5,
                     backgroundColor: Colors.grey[300],
-                    valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF06413D)),
+                    valueColor:
+                        const AlwaysStoppedAnimation<Color>(Color(0xFF06413D)),
                   ),
                 ),
               ),
@@ -132,7 +134,8 @@ class _BloodTypePageState extends State<BloodTypePage> {
               },
               child: const Text(
                 "Skip",
-                style: TextStyle(color: Color(0xFF06413D), fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: Color(0xFF06413D), fontWeight: FontWeight.bold),
               ),
             ),
           ],
@@ -212,7 +215,9 @@ class _BloodTypePageState extends State<BloodTypePage> {
         });
       },
       style: ElevatedButton.styleFrom(
-        backgroundColor: selectedBloodType == bloodType ? const Color(0xFFBCCE2A) : Colors.grey[300],
+        backgroundColor: selectedBloodType == bloodType
+            ? const Color(0xFFBCCE2A)
+            : Colors.grey[300],
         padding: const EdgeInsets.symmetric(vertical: 12),
         minimumSize: const Size(double.infinity, 55),
         shape: RoundedRectangleBorder(

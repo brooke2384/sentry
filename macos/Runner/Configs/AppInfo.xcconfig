@@ -5,10 +5,10 @@
 // 'flutter create' template.
 
 // The application's name. By default this is also the title of the Flutter window.
-PRODUCT_NAME = response
+PRODUCT_NAME = sentry
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = greatestinteractive.com.response
+PRODUCT_BUNDLE_IDENTIFIER = brooke2384.com.sentry
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2024 greatestinteractive.com. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2024 All rights reserved.

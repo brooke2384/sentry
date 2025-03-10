@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
-import 'package:response/responda_success.dart';
-import 'package:response/success_screen.dart';
+import 'package:sentry/responda_success.dart';
 
 class RespondaIdentityScreen extends StatefulWidget {
   const RespondaIdentityScreen({super.key});
@@ -75,19 +74,21 @@ class _RespondaIdentityScreenState extends State<RespondaIdentityScreen> {
     if (_imageFile == null) return;
 
     try {
-      var uri = Uri.parse('https://responda.frobyte.ke/api/v1/user'); // Replace with your API URL
+      var uri = Uri.parse(
+          'https://responda.frobyte.ke/api/v1/user'); // Replace with your API URL
 
       var request = http.MultipartRequest('POST', uri);
-      request.files.add(await http.MultipartFile.fromPath('image', _imageFile!.path));
+      request.files
+          .add(await http.MultipartFile.fromPath('image', _imageFile!.path));
 
-      var response = await request.send();
+      var sentry = await request.send();
 
-      if (response.statusCode == 200) {
+      if (sentry.statusCode == 200) {
         _showSuccessModal();
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Failed to upload image: ${response.statusCode}'),
+            content: Text('Failed to upload image: ${sentry.statusCode}'),
             backgroundColor: Colors.red,
           ),
         );
@@ -141,7 +142,8 @@ class _RespondaIdentityScreenState extends State<RespondaIdentityScreen> {
                   Navigator.of(context).pop(); // Close the modal
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => const RespondaSuccess()),
+                    MaterialPageRoute(
+                        builder: (context) => const RespondaSuccess()),
                   );
                 },
                 child: const Text(
@@ -245,32 +247,32 @@ class _RespondaIdentityScreenState extends State<RespondaIdentityScreen> {
                   ),
                   child: _imageFile != null
                       ? ClipOval(
-                    child: Image.file(
-                      _imageFile!,
-                      fit: BoxFit.cover,
-                      width: 150,
-                      height: 150,
-                    ),
-                  )
+                          child: Image.file(
+                            _imageFile!,
+                            fit: BoxFit.cover,
+                            width: 150,
+                            height: 150,
+                          ),
+                        )
                       : const Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.camera_alt,
-                        size: 50,
-                        color: Colors.teal,
-                      ),
-                      SizedBox(height: 8),
-                      Text(
-                        'USE CAMERA',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.teal,
-                          fontWeight: FontWeight.bold,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.camera_alt,
+                              size: 50,
+                              color: Colors.teal,
+                            ),
+                            SizedBox(height: 8),
+                            Text(
+                              'USE CAMERA',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.teal,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
                 ),
               ),
               const SizedBox(height: 26),
@@ -306,7 +308,8 @@ class _RespondaIdentityScreenState extends State<RespondaIdentityScreen> {
                   ),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 120, // Large horizontal padding
-                    vertical: 12, // Enough vertical padding for comfortable size
+                    vertical:
+                        12, // Enough vertical padding for comfortable size
                   ),
                 ),
                 icon: const Icon(
@@ -316,20 +319,20 @@ class _RespondaIdentityScreenState extends State<RespondaIdentityScreen> {
                 ),
                 label: _isLoading
                     ? const SizedBox(
-                  width: 16,
-                  height: 16,
-                  child: CircularProgressIndicator(
-                    color: Color(0xFF06413D),
-                    strokeWidth: 2.0,
-                  ),
-                )
+                        width: 16,
+                        height: 16,
+                        child: CircularProgressIndicator(
+                          color: Color(0xFF06413D),
+                          strokeWidth: 2.0,
+                        ),
+                      )
                     : const Text(
-                  'UPLOAD',
-                  style: TextStyle(
-                    color: Color(0xFF06413D),
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                        'UPLOAD',
+                        style: TextStyle(
+                          color: Color(0xFF06413D),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
               ),
               const SizedBox(height: 18),
               TextButton(

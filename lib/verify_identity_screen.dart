@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart' as path;
-import 'package:response/success_screen.dart'; // Replace with your actual SuccessScreen file
+import 'package:sentry/success_screen.dart'; // Replace with your actual SuccessScreen file
 
 class VerifyIdentityScreen extends StatefulWidget {
   const VerifyIdentityScreen({super.key});
@@ -89,7 +89,8 @@ class _VerifyIdentityScreenState extends State<VerifyIdentityScreen> {
 
       // Create a unique file path based on timestamp or other identifier
       final String fileName = path.basename(_imageFile!.path);
-      final Reference storageRef = FirebaseStorage.instance.ref().child('profile_images/$fileName');
+      final Reference storageRef =
+          FirebaseStorage.instance.ref().child('profile_images/$fileName');
 
       // Upload file to Firebase Storage
       UploadTask uploadTask = storageRef.putFile(_imageFile!);
@@ -102,7 +103,6 @@ class _VerifyIdentityScreenState extends State<VerifyIdentityScreen> {
       print('Image URL: $downloadURL');
 
       _showSuccessModal(); // Show success modal
-
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -116,7 +116,6 @@ class _VerifyIdentityScreenState extends State<VerifyIdentityScreen> {
       });
     }
   }
-
 
   // Success Modal with green check and a button to proceed
   void _showSuccessModal() {
@@ -153,7 +152,8 @@ class _VerifyIdentityScreenState extends State<VerifyIdentityScreen> {
                   Navigator.of(context).pop(); // Close the modal
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => const SuccessScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => const SuccessScreen()),
                   );
                 },
                 child: const Text(
@@ -257,32 +257,32 @@ class _VerifyIdentityScreenState extends State<VerifyIdentityScreen> {
                   ),
                   child: _imageFile != null
                       ? ClipOval(
-                    child: Image.file(
-                      _imageFile!,
-                      fit: BoxFit.cover,
-                      width: 150,
-                      height: 150,
-                    ),
-                  )
+                          child: Image.file(
+                            _imageFile!,
+                            fit: BoxFit.cover,
+                            width: 150,
+                            height: 150,
+                          ),
+                        )
                       : const Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.camera_alt,
-                        size: 50,
-                        color: Colors.teal,
-                      ),
-                      SizedBox(height: 8),
-                      Text(
-                        'USE CAMERA',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.teal,
-                          fontWeight: FontWeight.bold,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.camera_alt,
+                              size: 50,
+                              color: Colors.teal,
+                            ),
+                            SizedBox(height: 8),
+                            Text(
+                              'USE CAMERA',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.teal,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
                 ),
               ),
               const SizedBox(height: 26),

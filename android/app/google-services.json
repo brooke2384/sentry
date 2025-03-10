@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "765951702863",
+    "project_id": "sentry123",
+    "storage_bucket": "sentry123.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:765951702863:android:3c440cea32c96eba65773a",
+        "android_client_info": {
+          "package_name": "brooke2384.com.sentry"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBynTDGgwgSsNfxxjbZfaD6w_alvOQMfgc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart'; // Google Sign-In
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart'; // Firebase Auth
-import 'package:google_sign_in/google_sign_in.dart'; // Google Sign-In for Firebase
+// Google Sign-In for Firebase
 import 'enter_mobile_screen.dart';
 
 class LoginPage extends StatefulWidget {

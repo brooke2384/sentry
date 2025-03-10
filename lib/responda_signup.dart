@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:response/responda_identity.dart';
-import 'package:response/responda_login.dart';
-import 'package:response/verify_identity_screen.dart';
-import 'package:response/login_page.dart';
+import 'package:sentry/responda_identity.dart';
+import 'package:sentry/responda_login.dart';
 
 class RespondaSignup extends StatefulWidget {
   const RespondaSignup({super.key});
@@ -58,7 +56,8 @@ class _RespondaSignupState extends State<RespondaSignup> {
                 Navigator.pop(context); // Close the dialog
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => const RespondaIdentityScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => const RespondaIdentityScreen()),
                 );
               },
               child: const Text(
@@ -132,7 +131,7 @@ class _RespondaSignupState extends State<RespondaSignup> {
       final url = Uri.parse('https://responda.frobyte.ke/api/v1/user');
 
       try {
-        final response = await http.post(
+        final sentry = await http.post(
           url,
           headers: {'Content-Type': 'application/json'},
           body: json.encode({
@@ -142,13 +141,13 @@ class _RespondaSignupState extends State<RespondaSignup> {
           }),
         );
 
-        if (response.statusCode == 201) {
+        if (sentry.statusCode == 201) {
           // Sign-up successful, show success modal
           _showSuccessDialog();
         } else {
-          // Handle error response from API
-          final responseData = json.decode(response.body);
-          _showErrorDialog(responseData['message'] ?? 'Sign-up failed');
+          // Handle error sentry from API
+          final sentryData = json.decode(sentry.body);
+          _showErrorDialog(sentryData['message'] ?? 'Sign-up failed');
         }
       } catch (e) {
         _showErrorDialog('Sign-up failed: ${e.toString()}');

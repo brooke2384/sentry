@@ -1,8 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:response/responda_home.dart';
-import 'package:response/responda_login.dart';
-import 'package:response/welcome_screen.dart';
+import 'package:sentry/responda_home.dart';
+import 'package:sentry/responda_login.dart';
+import 'package:sentry/welcome_screen.dart';
 import 'admin_chat.dart';
 import 'chat_screen.dart';
 import 'history_screen.dart';
@@ -27,10 +27,13 @@ import 'emergency_contacts_page.dart';
 import 'height_weight_page.dart';
 import 'residential_address_page.dart';
 import 'office_address_page.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(); // Initialize Firebase before running the app
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 

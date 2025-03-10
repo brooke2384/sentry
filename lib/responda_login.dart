@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:response/responda_home.dart';
-import 'package:response/responda_signup.dart';
-import 'login_page.dart'; // Import the original login page
+import 'package:sentry/responda_home.dart';
+import 'package:sentry/responda_signup.dart';
+// Import the original login page
 
 class RespondaLogin extends StatefulWidget {
   const RespondaLogin({super.key});
@@ -17,8 +17,6 @@ class _RespondaLoginState extends State<RespondaLogin> {
   String emailOrPhone = '';
   String password = '';
   bool isLoading = false;
-
-
 
   Future<void> _loginResponda() async {
     setState(() {
@@ -34,7 +32,7 @@ class _RespondaLoginState extends State<RespondaLogin> {
     };
 
     try {
-      final response = await http.post(
+      final sentry = await http.post(
         Uri.parse(apiUrl),
         headers: {
           'Content-Type': 'application/json',
@@ -42,13 +40,13 @@ class _RespondaLoginState extends State<RespondaLogin> {
         body: jsonEncode(requestBody),
       );
 
-      if (response.statusCode == 200) {
+      if (sentry.statusCode == 200) {
         // If login is successful, navigate to the home screen
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const RespondaHomeScreen()),
         );
-      } else if (response.statusCode == 404) {
+      } else if (sentry.statusCode == 404) {
         // User not found case
         _showUserNotFoundDialog();
       } else {
@@ -283,30 +281,29 @@ class _RespondaLoginState extends State<RespondaLogin> {
                   isLoading
                       ? const CircularProgressIndicator()
                       : SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          _loginResponda();
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFBCCE2A),
-                        padding: const EdgeInsets.symmetric(vertical: 15),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                _loginResponda();
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFFBCCE2A),
+                              padding: const EdgeInsets.symmetric(vertical: 15),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                            child: const Text(
+                              'LOGIN',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16.0,
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                      child: const Text(
-                        'LOGIN',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16.0,
-                        ),
-                      ),
-                    ),
-                  ),
                   const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

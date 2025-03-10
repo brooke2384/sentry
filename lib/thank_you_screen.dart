@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:response/profile_page.dart';
-import 'package:response/settings_page.dart';
+import 'package:sentry/profile_page.dart';
 
 class ThankYouScreen extends StatefulWidget {
   const ThankYouScreen({super.key});
@@ -51,7 +50,8 @@ class _ThankYouScreenState extends State<ThankYouScreen> {
               title: const Text('LOGOUT'),
               onTap: () async {
                 await FirebaseAuth.instance.signOut();
-                Navigator.pushReplacementNamed(context, '/login'); // Redirect to login screen after logout
+                Navigator.pushReplacementNamed(
+                    context, '/login'); // Redirect to login screen after logout
               },
             ),
           ],
@@ -75,7 +75,8 @@ class _ThankYouScreenState extends State<ThankYouScreen> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const ProfilePage()),
+                    MaterialPageRoute(
+                        builder: (context) => const ProfilePage()),
                   );
                 },
                 child: const Text(
@@ -196,28 +197,35 @@ class _ThankYouScreenState extends State<ThankYouScreen> {
                       return GestureDetector(
                         onTap: () {
                           setState(() {
-                            _selectedEmojiIndex = index; // Update the selected index
+                            _selectedEmojiIndex =
+                                index; // Update the selected index
                             _animatingEmojiIndex = index; // Start animation
                           });
 
                           // Reset animation but keep background color after a delay
                           Future.delayed(const Duration(milliseconds: 500), () {
                             setState(() {
-                              _animatingEmojiIndex = null; // Reset to default size
+                              _animatingEmojiIndex =
+                                  null; // Reset to default size
                             });
                           });
                         },
                         child: AnimatedScale(
-                          scale: _animatingEmojiIndex == index ? 1.5 : 1.0, // Scale animation only for active emoji
-                          duration: const Duration(milliseconds: 300), // Animation duration
+                          scale: _animatingEmojiIndex == index
+                              ? 1.5
+                              : 1.0, // Scale animation only for active emoji
+                          duration: const Duration(
+                              milliseconds: 300), // Animation duration
                           child: Container(
                             width: 60,
                             height: 60,
                             decoration: BoxDecoration(
                               color: _selectedEmojiIndex == index
                                   ? Colors.white.withOpacity(0.2)
-                                  : Colors.transparent, // Maintain background color for selected emoji
-                              border: Border.all(color: Colors.white, width: 2.0),
+                                  : Colors
+                                      .transparent, // Maintain background color for selected emoji
+                              border:
+                                  Border.all(color: Colors.white, width: 2.0),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             child: Icon(
@@ -284,7 +292,7 @@ class _ThankYouScreenState extends State<ThankYouScreen> {
                     Navigator.pushNamedAndRemoveUntil(
                       context,
                       '/home',
-                          (Route<dynamic> route) => false,
+                      (Route<dynamic> route) => false,
                     );
                   },
                   icon: const Icon(Icons.home, color: Colors.lightGreenAccent),

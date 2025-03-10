@@ -46,7 +46,7 @@ list(APPEND FLUTTER_LIBRARY_HEADERS
   "fl_method_call.h"
   "fl_method_channel.h"
   "fl_method_codec.h"
-  "fl_method_response.h"
+  "fl_method_sentry.h"
   "fl_plugin_registrar.h"
   "fl_plugin_registry.h"
   "fl_standard_message_codec.h"

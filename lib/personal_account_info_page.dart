@@ -6,7 +6,8 @@ class PersonalAccountInfoPage extends StatefulWidget {
   const PersonalAccountInfoPage({super.key});
 
   @override
-  _PersonalAccountInfoPageState createState() => _PersonalAccountInfoPageState();
+  _PersonalAccountInfoPageState createState() =>
+      _PersonalAccountInfoPageState();
 }
 
 class _PersonalAccountInfoPageState extends State<PersonalAccountInfoPage> {
@@ -28,9 +29,10 @@ class _PersonalAccountInfoPageState extends State<PersonalAccountInfoPage> {
     });
 
     try {
-      final response = await http.get(Uri.parse('https://responda.frobyte.ke/api/v1/users/'));
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
+      final sentry = await http
+          .get(Uri.parse('https://responda.frobyte.ke/api/v1/users/'));
+      if (sentry.statusCode == 200) {
+        final data = jsonDecode(sentry.body);
         setState(() {
           _usernameController.text = data['username'] ?? 'User';
           _profilePicUrl = data['image'] ?? '';
@@ -54,13 +56,13 @@ class _PersonalAccountInfoPageState extends State<PersonalAccountInfoPage> {
     });
 
     try {
-      final response = await http.put(
+      final sentry = await http.put(
         Uri.parse('https://responda.frobyte.ke/api/v1/users/'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'username': _usernameController.text}),
       );
 
-      if (response.statusCode == 200) {
+      if (sentry.statusCode == 200) {
         setState(() {
           _isEditing = false;
           _isLoading = false;
@@ -115,7 +117,8 @@ class _PersonalAccountInfoPageState extends State<PersonalAccountInfoPage> {
               radius: 50,
               backgroundImage: _profilePicUrl.isNotEmpty
                   ? NetworkImage(_profilePicUrl)
-                  : const AssetImage('assets/default_profile.png') as ImageProvider,
+                  : const AssetImage('assets/default_profile.png')
+                      as ImageProvider,
             ),
             const SizedBox(height: 20),
 
@@ -142,14 +145,14 @@ class _PersonalAccountInfoPageState extends State<PersonalAccountInfoPage> {
                 onPressed: _isLoading
                     ? null
                     : () {
-                  if (_isEditing) {
-                    _updateUsername(); // Update data
-                  } else {
-                    setState(() {
-                      _isEditing = true; // Enter edit mode
-                    });
-                  }
-                },
+                        if (_isEditing) {
+                          _updateUsername(); // Update data
+                        } else {
+                          setState(() {
+                            _isEditing = true; // Enter edit mode
+                          });
+                        }
+                      },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFD0DB27), // Light yellow
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -160,12 +163,12 @@ class _PersonalAccountInfoPageState extends State<PersonalAccountInfoPage> {
                 child: _isLoading
                     ? const CircularProgressIndicator(color: Colors.white)
                     : Text(
-                  _isEditing ? 'Save Username' : 'Edit Username',
-                  style: const TextStyle(
-                    color: Color(0xFF06413D),
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                        _isEditing ? 'Save Username' : 'Edit Username',
+                        style: const TextStyle(
+                          color: Color(0xFF06413D),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
               ),
             ),
           ],

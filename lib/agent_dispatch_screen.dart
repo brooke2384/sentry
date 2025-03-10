@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:response/api_service.dart';
-import 'package:response/profile_page.dart';
-import 'package:response/settings_page.dart';
+import 'package:sentry/api_service.dart';
+import 'package:sentry/profile_page.dart';
+import 'package:sentry/settings_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AgentDispatchedPage extends StatelessWidget {
@@ -10,10 +10,10 @@ class AgentDispatchedPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
     return Scaffold(
-      key: _scaffoldKey,
+      key: scaffoldKey,
       extendBody: true, // Extend the body behind BottomAppBar
       extendBodyBehindAppBar: true, // Extend the body behind the AppBar
       appBar: AppBar(
@@ -23,7 +23,7 @@ class AgentDispatchedPage extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.menu, color: Colors.white),
           onPressed: () {
-            _scaffoldKey.currentState?.openDrawer();
+            scaffoldKey.currentState?.openDrawer();
           },
         ),
         actions: [

@@ -22,15 +22,16 @@ class _ProfilePageState extends State<ProfilePage> {
   // Fetching profile details from the custom API
   Future<void> _fetchUserData() async {
     try {
-      final response = await http.get(
+      final sentry = await http.get(
         Uri.parse('https://responda.frobyte.ke/api/v1/users/'),
       );
 
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
+      if (sentry.statusCode == 200) {
+        final data = jsonDecode(sentry.body);
         setState(() {
           _username = data['username'] ?? 'User'; // Extract username
-          _profileImageUrl = data['image'] ?? _profileImageUrl; // Extract profile image
+          _profileImageUrl =
+              data['image'] ?? _profileImageUrl; // Extract profile image
         });
       } else {
         throw Exception('Failed to load profile data');
@@ -78,7 +79,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  buildListTile(context, 'Personal and Account Info', '/personal_account_info'),
+                  buildListTile(context, 'Personal and Account Info',
+                      '/personal_account_info'),
                   buildListTile(context, 'Privacy', '/privacy'),
                   const Divider(),
                   const Text(
@@ -91,8 +93,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   const SizedBox(height: 8),
                   buildListTile(context, 'Medical Profile', '/medical_profile'),
-                  buildListTile(context, 'Emergency Contacts', '/emergency_contacts'),
-                  buildListTile(context, 'Residential Address', '/residential_address'),
+                  buildListTile(
+                      context, 'Emergency Contacts', '/emergency_contacts'),
+                  buildListTile(
+                      context, 'Residential Address', '/residential_address'),
                 ],
               ),
             ),
@@ -160,7 +164,8 @@ class UserCard extends StatelessWidget {
   final String username;
   final String profileImageUrl;
 
-  const UserCard({super.key, required this.username, required this.profileImageUrl});
+  const UserCard(
+      {super.key, required this.username, required this.profileImageUrl});
 
   @override
   Widget build(BuildContext context) {

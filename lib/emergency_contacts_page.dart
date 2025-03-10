@@ -30,11 +30,11 @@ class _EmergencyContactsPageState extends State<EmergencyContactsPage> {
 
     try {
       // Replace 'YOUR_USER_ID' with the actual user ID if required
-      final response = await http.get(Uri.parse(apiUrl));
+      final sentry = await http.get(Uri.parse(apiUrl));
 
-      if (response.statusCode == 200) {
-        // Successful API response
-        final data = jsonDecode(response.body);
+      if (sentry.statusCode == 200) {
+        // Successful API sentry
+        final data = jsonDecode(sentry.body);
 
         // Assuming 'data' contains 'name' and 'phone'
         setState(() {
@@ -42,7 +42,7 @@ class _EmergencyContactsPageState extends State<EmergencyContactsPage> {
           _contactPhoneController.text = data['phone'] ?? '';
         });
       } else {
-        // Handle the error response
+        // Handle the error sentry
         throw Exception('Failed to load contact data');
       }
     } catch (e) {
@@ -67,16 +67,17 @@ class _EmergencyContactsPageState extends State<EmergencyContactsPage> {
         'phone': _contactPhoneController.text,
       };
 
-      final response = await http.put(
+      final sentry = await http.put(
         Uri.parse(apiUrl),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(updatedContact),
       );
 
-      if (response.statusCode == 200) {
+      if (sentry.statusCode == 200) {
         // Successful update
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Emergency contact updated successfully!')),
+          const SnackBar(
+              content: Text('Emergency contact updated successfully!')),
         );
 
         setState(() {
@@ -114,93 +115,101 @@ class _EmergencyContactsPageState extends State<EmergencyContactsPage> {
         ),
       ),
       body: _isLoading
-          ? const Center(child: CircularProgressIndicator()) // Show loader if data is loading
+          ? const Center(
+              child:
+                  CircularProgressIndicator()) // Show loader if data is loading
           : Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Emergency Contact Information',
-              style: TextStyle(
-                color: Color(0xFF06413D), // Dark green
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 16),
-
-            // Contact Name Section (Editable)
-            const Text(
-              'Contact Name:',
-              style: TextStyle(
-                color: Color(0xFF06413D),
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 8),
-            TextField(
-              controller: _contactNameController,
-              enabled: _isEditing, // Enable/disable based on edit mode
-              decoration: InputDecoration(
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-                filled: !_isEditing,
-                fillColor: _isEditing ? null : Colors.grey[200],
-              ),
-            ),
-            const SizedBox(height: 16),
-
-            // Contact Phone Section (Editable)
-            const Text(
-              'Contact Phone Number:',
-              style: TextStyle(
-                color: Color(0xFF06413D),
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 8),
-            TextField(
-              controller: _contactPhoneController,
-              enabled: _isEditing,
-              keyboardType: TextInputType.phone,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-                filled: !_isEditing,
-                fillColor: _isEditing ? null : Colors.grey[200],
-              ),
-            ),
-            const SizedBox(height: 16),
-
-            // Edit and Save Button
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  if (_isEditing) {
-                    _updateEmergencyContact(); // Save data to API
-                  } else {
-                    setState(() {
-                      _isEditing = true; // Enter edit mode
-                    });
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF32CD32), // Lime green color
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 12.0,
-                    horizontal: 24.0,
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Emergency Contact Information',
+                    style: TextStyle(
+                      color: Color(0xFF06413D), // Dark green
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8), // Border radius of 8
+                  const SizedBox(height: 16),
+
+                  // Contact Name Section (Editable)
+                  const Text(
+                    'Contact Name:',
+                    style: TextStyle(
+                      color: Color(0xFF06413D),
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                child: Text(_isEditing ? 'Save Emergency Contact' : 'Edit Emergency Contact'),
+                  const SizedBox(height: 8),
+                  TextField(
+                    controller: _contactNameController,
+                    enabled: _isEditing, // Enable/disable based on edit mode
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                      filled: !_isEditing,
+                      fillColor: _isEditing ? null : Colors.grey[200],
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Contact Phone Section (Editable)
+                  const Text(
+                    'Contact Phone Number:',
+                    style: TextStyle(
+                      color: Color(0xFF06413D),
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  TextField(
+                    controller: _contactPhoneController,
+                    enabled: _isEditing,
+                    keyboardType: TextInputType.phone,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                      filled: !_isEditing,
+                      fillColor: _isEditing ? null : Colors.grey[200],
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Edit and Save Button
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (_isEditing) {
+                          _updateEmergencyContact(); // Save data to API
+                        } else {
+                          setState(() {
+                            _isEditing = true; // Enter edit mode
+                          });
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            const Color(0xFF32CD32), // Lime green color
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 12.0,
+                          horizontal: 24.0,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(8), // Border radius of 8
+                        ),
+                      ),
+                      child: Text(_isEditing
+                          ? 'Save Emergency Contact'
+                          : 'Edit Emergency Contact'),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
-      ),
     );
   }
 }

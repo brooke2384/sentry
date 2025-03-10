@@ -30,8 +30,9 @@ class _AdminChatScreenState extends State<AdminChatScreen> {
       });
 
       try {
-        var response = await http.post(
-          Uri.parse('https://responda.frobyte.ke/api/v1/user'), // Replace with your API endpoint
+        var sentry = await http.post(
+          Uri.parse(
+              'https://responda.frobyte.ke/api/v1/user'), // Replace with your API endpoint
           headers: {'Content-Type': 'application/json'},
           body: jsonEncode({
             'message': _messageController.text,
@@ -40,11 +41,11 @@ class _AdminChatScreenState extends State<AdminChatScreen> {
           }),
         );
 
-        if (response.statusCode == 200) {
+        if (sentry.statusCode == 200) {
           // Message successfully sent
         } else {
           // Handle error
-          print('Failed to send message: ${response.statusCode}');
+          print('Failed to send message: ${sentry.statusCode}');
         }
       } catch (e) {
         print('Error sending message: $e');
@@ -57,20 +58,21 @@ class _AdminChatScreenState extends State<AdminChatScreen> {
   // API call to fetch messages
   Future<void> _fetchMessages() async {
     try {
-      var response = await http.get(
-        Uri.parse('https://responda.frobyte.ke/api/v1/user?adminId=admin123'), // Replace with your API endpoint
+      var sentry = await http.get(
+        Uri.parse(
+            'https://responda.frobyte.ke/api/v1/user?adminId=admin123'), // Replace with your API endpoint
       );
 
-      if (response.statusCode == 200) {
-        List<dynamic> fetchedMessages = jsonDecode(response.body);
+      if (sentry.statusCode == 200) {
+        List<dynamic> fetchedMessages = jsonDecode(sentry.body);
         setState(() {
           _messages.addAll(fetchedMessages.map((message) => {
-            'text': message['text'],
-            'isAdmin': message['isAdmin'],
-          }));
+                'text': message['text'],
+                'isAdmin': message['isAdmin'],
+              }));
         });
       } else {
-        print('Failed to fetch messages: ${response.statusCode}');
+        print('Failed to fetch messages: ${sentry.statusCode}');
       }
     } catch (e) {
       print('Error fetching messages: $e');
@@ -87,7 +89,8 @@ class _AdminChatScreenState extends State<AdminChatScreen> {
             child: Container(
               color: const Color(0xFFEFF8F3),
               child: ListView.builder(
-                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
                 itemCount: _messages.length,
                 itemBuilder: (context, index) {
                   final message = _messages[index];
@@ -159,7 +162,7 @@ class _AdminChatScreenState extends State<AdminChatScreen> {
                 filled: true,
                 fillColor: Colors.white,
                 contentPadding:
-                const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide.none,

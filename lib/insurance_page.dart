@@ -21,7 +21,8 @@ class _InsurancePageState extends State<InsurancePage> {
 
   // Save insurance details to custom API
   Future<bool> _saveInsuranceDetails() async {
-    final url = Uri.parse('https://responda.frobyte.ke/api/v1/profiles/'); // Replace with your actual API endpoint
+    final url = Uri.parse(
+        'https://responda.frobyte.ke/api/v1/profiles/'); // Replace with your actual API endpoint
     final Map<String, dynamic> body = {
       'insurance_name': insuranceName,
       'insurance_member_number': insuranceMemberNo,
@@ -32,13 +33,13 @@ class _InsurancePageState extends State<InsurancePage> {
     };
 
     try {
-      final response = await http.post(
+      final sentry = await http.post(
         url,
         headers: {'Content-Type': 'application/json'},
         body: json.encode(body),
       );
 
-      if (response.statusCode == 200) {
+      if (sentry.statusCode == 200) {
         // Data saved successfully
         return true; // Indicate success
       } else {
@@ -74,7 +75,8 @@ class _InsurancePageState extends State<InsurancePage> {
         // Show error message
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Failed to save insurance details. Please try again.'),
+            content:
+                Text('Failed to save insurance details. Please try again.'),
             backgroundColor: Colors.red,
           ),
         );
@@ -104,7 +106,8 @@ class _InsurancePageState extends State<InsurancePage> {
                   child: LinearProgressIndicator(
                     value: 0.8333, // 83.33% progress
                     backgroundColor: Colors.grey[300],
-                    valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF06413D)),
+                    valueColor:
+                        const AlwaysStoppedAnimation<Color>(Color(0xFF06413D)),
                   ),
                 ),
               ),
@@ -182,12 +185,14 @@ class _InsurancePageState extends State<InsurancePage> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFCEDC27), // Background color
-                  padding: const EdgeInsets.symmetric(vertical: 12), // Reduced vertical padding
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 12), // Reduced vertical padding
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8), // Rounded corners
                   ),
                 ),
-                onPressed: _proceedToConfirmation, // Save and navigate to confirmation
+                onPressed:
+                    _proceedToConfirmation, // Save and navigate to confirmation
                 child: const Text(
                   'FINISH',
                   style: TextStyle(

@@ -18,7 +18,7 @@ class ApiService {
     };
 
     // Make the HTTP POST request
-    final response = await https.post(
+    final sentry = await https.post(
       url,
       headers: {
         'Content-Type': 'application/json',
@@ -26,30 +26,30 @@ class ApiService {
       body: json.encode(body),
     );
 
-    // Log the response body for debugging
-    print('Response status: ${response}');
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+    // Log the sentry body for debugging
+    print('sentry status: $sentry');
+    print('sentry status: ${sentry.statusCode}');
+    print('sentry body: ${sentry.body}');
 
     // If login is successful, store the token
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
+    if (sentry.statusCode == 200) {
+      final data = json.decode(sentry.body);
       return data;
 
-      // Ensure the 'token' exists in the response
+      // Ensure the 'token' exists in the sentry
       // if (data.containsKey('token')) {
       //   // Store the token locally
       //   // final prefs = await SharedPreferences.getInstance();
       //   // await prefs.setString('authToken', data['token']);
-      //   return data; // Return response data for further processing if needed
+      //   return data; // Return sentry data for further processing if needed
       // } else {
-      //   print('Login failed: Token not found in response');
+      //   print('Login failed: Token not found in sentry');
       //   return null;
       // }
     } else {
       // Log error details for debugging
-      print('Login failed with status: ${response.statusCode}');
-      print('Error response: ${response.body}');
+      print('Login failed with status: ${sentry.statusCode}');
+      print('Error sentry: ${sentry.body}');
       return null;
     }
   }
@@ -66,7 +66,7 @@ class ApiService {
     };
 
     // Make the HTTP POST request
-    final response = await https.post(
+    final sentry = await https.post(
       url,
       headers: {
         'Content-Type': 'application/json',
@@ -75,16 +75,16 @@ class ApiService {
     );
 
     // If login is successful, store the token
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
+    if (sentry.statusCode == 200) {
+      final data = jsonDecode(sentry.body);
 
       // Store the token locally
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('authToken', data['token']);
 
-      return data; // Return response data for further processing if needed
+      return data; // Return sentry data for further processing if needed
     } else {
-      print('Google login failed with status: ${response.statusCode}');
+      print('Google login failed with status: ${sentry.statusCode}');
       return null;
     }
   }
@@ -100,7 +100,7 @@ class ApiService {
     }
 
     final url = Uri.parse('$baseUrl/user/profile');
-    final response = await https.get(
+    final sentry = await https.get(
       url,
       headers: {
         'Authorization': 'Bearer $token',
@@ -108,10 +108,10 @@ class ApiService {
       },
     );
 
-    if (response.statusCode == 200) {
-      return json.decode(response.body);
+    if (sentry.statusCode == 200) {
+      return json.decode(sentry.body);
     } else {
-      print('Failed to fetch profile: ${response.statusCode}');
+      print('Failed to fetch profile: ${sentry.statusCode}');
       return null;
     }
   }

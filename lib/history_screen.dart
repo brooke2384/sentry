@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:response/profile_page.dart';
+import 'package:sentry/profile_page.dart';
 
 // Dummy distress request data
 final List<Map<String, String>> distressRequests = [
@@ -33,7 +33,8 @@ class HistoryScreen extends StatelessWidget {
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.black),
         leading: Padding(
-          padding: const EdgeInsets.only(left: 16.0, top: 8.0), // Adjust padding as needed
+          padding: const EdgeInsets.only(
+              left: 16.0, top: 8.0), // Adjust padding as needed
           child: const CircleAvatar(
             backgroundImage: AssetImage('assets/icons/user.png'),
             radius: 20, // Set a smaller radius for the avatar
@@ -47,7 +48,8 @@ class HistoryScreen extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-        centerTitle: false, // Optional: This aligns the title to the left, next to the avatar
+        centerTitle:
+            false, // Optional: This aligns the title to the left, next to the avatar
         actions: [
           IconButton(
             onPressed: () {
@@ -322,6 +324,8 @@ class HistoryScreen extends StatelessWidget {
 
 // Distress History Page
 class DistressHistoryScreen extends StatelessWidget {
+  const DistressHistoryScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -359,7 +363,8 @@ class DistressHistoryScreen extends StatelessWidget {
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Location: Lat ${location['latitude']}, Long ${location['longitude']}'),
+                      Text(
+                          'Location: Lat ${location['latitude']}, Long ${location['longitude']}'),
                       Text('Time: ${timestamp.toString()}'),
                     ],
                   ),
@@ -372,7 +377,6 @@ class DistressHistoryScreen extends StatelessWidget {
     );
   }
 }
-
 
 // Ordering Page
 class OrderingPage extends StatelessWidget {
@@ -467,7 +471,8 @@ class IncidentReportsPage extends StatelessWidget {
             margin: const EdgeInsets.only(bottom: 16),
             child: ListTile(
               title: const Text('Incident: Theft'),
-              subtitle: Text('Reported on: ${DateTime.now().subtract(Duration(days: index * 30))}'),
+              subtitle: Text(
+                  'Reported on: ${DateTime.now().subtract(Duration(days: index * 30))}'),
             ),
           );
         },

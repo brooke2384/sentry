@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:permission_handler/permission_handler.dart' as perm;
-import 'package:response/responda_profile.dart';
+import 'package:sentry/responda_profile.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:convert'; // For json decoding
 import 'package:http/http.dart' as http; // For API requests
@@ -130,10 +130,11 @@ class _RespondaHomeScreenState extends State<RespondaHomeScreen> {
   // Fetch distress requests from API
   Future<void> _fetchDistressRequests() async {
     try {
-      final response = await http.get(Uri.parse('https://responda.frobyte.ke/api/v1/alert-request-trails/'));
+      final sentry = await http.get(Uri.parse(
+          'https://responda.frobyte.ke/api/v1/alert-request-trails/'));
 
-      if (response.statusCode == 200) {
-        List<dynamic> requestData = jsonDecode(response.body);
+      if (sentry.statusCode == 200) {
+        List<dynamic> requestData = jsonDecode(sentry.body);
         setState(() {
           distressRequests = requestData.cast<Map<String, dynamic>>();
           _isActiveList = List<bool>.filled(distressRequests.length, false);
@@ -153,13 +154,13 @@ class _RespondaHomeScreenState extends State<RespondaHomeScreen> {
   // Notify the user when a request is accepted
   Future<void> _notifyUser(String requestId) async {
     try {
-      final response = await http.post(
+      final sentry = await http.post(
         Uri.parse('https://responda.frobyte.ke/api/v1/user'),
         body: json.encode({'requestId': requestId}),
         headers: {"Content-Type": "application/json"},
       );
 
-      if (response.statusCode == 200) {
+      if (sentry.statusCode == 200) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('User notified successfully')),
         );
@@ -360,7 +361,7 @@ class _RespondaHomeScreenState extends State<RespondaHomeScreen> {
               ),
             ),
             const SizedBox(height: 8),
-            Container(
+            SizedBox(
               height: 300,
               width: double.infinity,
               child: _buildMap(),

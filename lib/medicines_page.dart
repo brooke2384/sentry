@@ -19,18 +19,20 @@ class _MedicinesPageState extends State<MedicinesPage> {
   Future<void> _saveMedicineData() async {
     try {
       var url = Uri.parse('https://responda.frobyte.ke/api/v1/profiles/');
-      var response = await http.post(
+      var sentry = await http.post(
         url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: json.encode({
-          'is_taking_maintenance_medicine': takesMedicines == 'Yes', // Convert to boolean
-          'maintenance_medicine_type': medicineType.isEmpty ? 'None' : medicineType,
+          'is_taking_maintenance_medicine':
+              takesMedicines == 'Yes', // Convert to boolean
+          'maintenance_medicine_type':
+              medicineType.isEmpty ? 'None' : medicineType,
         }),
       );
 
-      if (response.statusCode == 200) {
+      if (sentry.statusCode == 200) {
         print('Data saved successfully');
       } else {
         throw Exception('Failed to save data');
@@ -47,7 +49,8 @@ class _MedicinesPageState extends State<MedicinesPage> {
 
   // Handle saving medicine info and navigate to next page
   Future<void> _proceedToNextPage() async {
-    if (takesMedicines == null || (takesMedicines == 'Yes' && medicineType.isEmpty)) {
+    if (takesMedicines == null ||
+        (takesMedicines == 'Yes' && medicineType.isEmpty)) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Please complete the form before proceeding.'),
@@ -75,7 +78,8 @@ class _MedicinesPageState extends State<MedicinesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200], // Light grey background for the entire page
+      backgroundColor:
+          Colors.grey[200], // Light grey background for the entire page
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -96,7 +100,8 @@ class _MedicinesPageState extends State<MedicinesPage> {
                   child: LinearProgressIndicator(
                     value: 0.5, // 50% progress
                     backgroundColor: Colors.grey[300],
-                    valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF05403C)),
+                    valueColor:
+                        const AlwaysStoppedAnimation<Color>(Color(0xFF05403C)),
                   ),
                 ),
               ),
@@ -105,11 +110,13 @@ class _MedicinesPageState extends State<MedicinesPage> {
             // Skip button
             TextButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/blood_type'); // Skip to next page
+                Navigator.pushNamed(
+                    context, '/blood_type'); // Skip to next page
               },
               child: const Text(
                 "Skip",
-                style: TextStyle(color: Color(0xFF05403C), fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: Color(0xFF05403C), fontWeight: FontWeight.bold),
               ),
             ),
           ],
@@ -128,7 +135,10 @@ class _MedicinesPageState extends State<MedicinesPage> {
                   // Question Text
                   const Text(
                     "Do you take any maintenance medicines?",
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xFF05403C)), // Updated color
+                    style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF05403C)), // Updated color
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 30),
@@ -143,14 +153,22 @@ class _MedicinesPageState extends State<MedicinesPage> {
                           });
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: takesMedicines == 'Yes' ? const Color(0xFFBCCE2A) : Colors.grey[300],
-                          padding: const EdgeInsets.symmetric(vertical: 12), // Reduced height
-                          minimumSize: const Size(double.infinity, 55), // Slightly reduced button size
+                          backgroundColor: takesMedicines == 'Yes'
+                              ? const Color(0xFFBCCE2A)
+                              : Colors.grey[300],
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 12), // Reduced height
+                          minimumSize: const Size(double.infinity,
+                              55), // Slightly reduced button size
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0), // Rounded corners
+                            borderRadius:
+                                BorderRadius.circular(8.0), // Rounded corners
                           ),
                         ),
-                        child: const Text('YES', style: TextStyle(color: Colors.black, fontSize: 16)), // Slightly reduced font
+                        child: const Text('YES',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16)), // Slightly reduced font
                       ),
                       const SizedBox(height: 20),
                       ElevatedButton(
@@ -158,18 +176,27 @@ class _MedicinesPageState extends State<MedicinesPage> {
                           setState(() {
                             takesMedicines = 'No';
                             showMedicineField = false;
-                            medicineType = ''; // Clear medicine type if "No" is selected
+                            medicineType =
+                                ''; // Clear medicine type if "No" is selected
                           });
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: takesMedicines == 'No' ? const Color(0xFFBCCE2A) : Colors.grey[300],
-                          padding: const EdgeInsets.symmetric(vertical: 12), // Reduced height
-                          minimumSize: const Size(double.infinity, 55), // Slightly reduced button size
+                          backgroundColor: takesMedicines == 'No'
+                              ? const Color(0xFFBCCE2A)
+                              : Colors.grey[300],
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 12), // Reduced height
+                          minimumSize: const Size(double.infinity,
+                              55), // Slightly reduced button size
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0), // Rounded corners
+                            borderRadius:
+                                BorderRadius.circular(8.0), // Rounded corners
                           ),
                         ),
-                        child: const Text('NO', style: TextStyle(color: Colors.black, fontSize: 16)), // Slightly reduced font
+                        child: const Text('NO',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16)), // Slightly reduced font
                       ),
                     ],
                   ),
@@ -184,11 +211,13 @@ class _MedicinesPageState extends State<MedicinesPage> {
                           filled: true,
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8.0), // Slight border radius (matches buttons)
+                            borderRadius: BorderRadius.circular(
+                                8.0), // Slight border radius (matches buttons)
                             borderSide: BorderSide.none, // No border outline
                           ),
                         ),
-                        style: const TextStyle(color: Color(0xFF05403C)), // Set text color
+                        style: const TextStyle(
+                            color: Color(0xFF05403C)), // Set text color
                         minLines: 6, // Increase input height
                         maxLines: 10, // Allow multiple lines
                         onChanged: (value) {
@@ -201,24 +230,32 @@ class _MedicinesPageState extends State<MedicinesPage> {
                   const SizedBox(height: 40),
                   // Continue Button (Sticky to the bottom)
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 20.0), // Padding for button
+                    padding: const EdgeInsets.only(
+                        bottom: 20.0), // Padding for button
                     child: SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFBCCE2A), // Background color
-                          padding: const EdgeInsets.symmetric(vertical: 15), // Reduced padding
+                          backgroundColor:
+                              const Color(0xFFBCCE2A), // Background color
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 15), // Reduced padding
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8), // Slight border radius
+                            borderRadius: BorderRadius.circular(
+                                8), // Slight border radius
                           ),
                         ),
-                        onPressed: _isLoading ? null : _proceedToNextPage, // Show loading and proceed
+                        onPressed: _isLoading
+                            ? null
+                            : _proceedToNextPage, // Show loading and proceed
                         child: _isLoading
-                            ? const CircularProgressIndicator(color: Colors.white)
+                            ? const CircularProgressIndicator(
+                                color: Colors.white)
                             : const Text(
-                          'CONTINUE',
-                          style: TextStyle(fontSize: 16, color: Color(0xFF05403C)),
-                        ),
+                                'CONTINUE',
+                                style: TextStyle(
+                                    fontSize: 16, color: Color(0xFF05403C)),
+                              ),
                       ),
                     ),
                   ),

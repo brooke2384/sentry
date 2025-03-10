@@ -30,21 +30,22 @@ class _ResidentialAddressPageState extends State<ResidentialAddressPage> {
   // Fetch residential info from API
   Future<void> _fetchResidentialInfo() async {
     try {
-      final response = await http.get(
+      final sentry = await http.get(
         Uri.parse('https://responda.frobyte.ke/api/v1/profiles/'),
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer YOUR_AUTH_TOKEN', // Pass your auth token here
+          'Authorization':
+              'Bearer YOUR_AUTH_TOKEN', // Pass your auth token here
         },
       );
 
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
+      if (sentry.statusCode == 200) {
+        final data = json.decode(sentry.body);
         setState(() {
           _selectedResidence = data['residence'] ?? 'Select your residence';
         });
       } else {
-        print('Error fetching residence info: ${response.body}');
+        print('Error fetching residence info: ${sentry.body}');
       }
     } catch (e) {
       print('Error fetching residence: $e');
@@ -56,30 +57,30 @@ class _ResidentialAddressPageState extends State<ResidentialAddressPage> {
     try {
       Location location = Location();
 
-      bool _serviceEnabled;
-      PermissionStatus _permissionGranted;
-      LocationData _locationData;
+      bool serviceEnabled;
+      PermissionStatus permissionGranted;
+      LocationData locationData;
 
-      _serviceEnabled = await location.serviceEnabled();
-      if (!_serviceEnabled) {
-        _serviceEnabled = await location.requestService();
-        if (!_serviceEnabled) {
+      serviceEnabled = await location.serviceEnabled();
+      if (!serviceEnabled) {
+        serviceEnabled = await location.requestService();
+        if (!serviceEnabled) {
           return;
         }
       }
 
-      _permissionGranted = await location.hasPermission();
-      if (_permissionGranted == PermissionStatus.denied) {
-        _permissionGranted = await location.requestPermission();
-        if (_permissionGranted != PermissionStatus.granted) {
+      permissionGranted = await location.hasPermission();
+      if (permissionGranted == PermissionStatus.denied) {
+        permissionGranted = await location.requestPermission();
+        if (permissionGranted != PermissionStatus.granted) {
           return;
         }
       }
 
-      _locationData = await location.getLocation();
+      locationData = await location.getLocation();
       setState(() {
         _currentLocation =
-        'Lat: ${_locationData.latitude}, Long: ${_locationData.longitude}';
+            'Lat: ${locationData.latitude}, Long: ${locationData.longitude}';
       });
     } catch (e) {
       print('Error fetching current location: $e');
@@ -89,18 +90,19 @@ class _ResidentialAddressPageState extends State<ResidentialAddressPage> {
   // Update residence info via API
   Future<void> _updateResidence() async {
     try {
-      final response = await http.patch(
+      final sentry = await http.patch(
         Uri.parse('https://responda.frobyte.ke/api/v1/profiles/'),
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer YOUR_AUTH_TOKEN', // Pass your auth token here
+          'Authorization':
+              'Bearer YOUR_AUTH_TOKEN', // Pass your auth token here
         },
         body: json.encode({
           'residence': _selectedResidence,
         }),
       );
 
-      if (response.statusCode == 200) {
+      if (sentry.statusCode == 200) {
         setState(() {
           _isEditing = false; // Disable edit mode after saving
         });
@@ -108,7 +110,7 @@ class _ResidentialAddressPageState extends State<ResidentialAddressPage> {
           const SnackBar(content: Text('Residence updated successfully!')),
         );
       } else {
-        print('Error updating residence: ${response.body}');
+        print('Error updating residence: ${sentry.body}');
       }
     } catch (e) {
       print('Error updating residence: $e');
@@ -154,16 +156,16 @@ class _ResidentialAddressPageState extends State<ResidentialAddressPage> {
               value: _selectedResidence,
               items: _countries
                   .map((country) => DropdownMenuItem<String>(
-                value: country,
-                child: Text(country),
-              ))
+                        value: country,
+                        child: Text(country),
+                      ))
                   .toList(),
               onChanged: _isEditing
                   ? (newValue) {
-                setState(() {
-                  _selectedResidence = newValue;
-                });
-              }
+                      setState(() {
+                        _selectedResidence = newValue;
+                      });
+                    }
                   : null,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
@@ -186,12 +188,12 @@ class _ResidentialAddressPageState extends State<ResidentialAddressPage> {
             _currentLocation == null
                 ? const CircularProgressIndicator()
                 : Text(
-              _currentLocation!,
-              style: const TextStyle(
-                fontSize: 16,
-                color: Colors.black87,
-              ),
-            ),
+                    _currentLocation!,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.black87,
+                    ),
+                  ),
             const SizedBox(height: 16),
 
             // Edit/Save Button
@@ -213,7 +215,8 @@ class _ResidentialAddressPageState extends State<ResidentialAddressPage> {
                     horizontal: 24.0,
                   ),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8), // Border radius of 8
+                    borderRadius:
+                        BorderRadius.circular(8), // Border radius of 8
                   ),
                 ),
                 child: Text(_isEditing ? 'Save Residence' : 'Edit Residence'),

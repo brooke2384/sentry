@@ -1,36 +1,35 @@
 plugins {
-    id "com.android.application"
-    id "kotlin-android"
-    id "dev.flutter.flutter-gradle-plugin" // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
-    id 'com.google.gms.google-services' // Ensure this is applied after the Flutter plugin
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'dev.flutter.flutter-gradle-plugin' // Ensure Flutter plugin is applied correctly
+    id 'com.google.gms.google-services' // Apply Google Services plugin for Firebase
 }
 
 android {
-    namespace = "greatestinteractive.com.response"
-    compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    namespace "brooke2384.com.sentry" // Update this with your correct package name
+    compileSdk 34 // Ensure this is compatible with your Flutter version
+    ndkVersion flutter.ndkVersion
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
+        jvmTarget = "1.8"
     }
 
     defaultConfig {
-        applicationId = "greatestinteractive.com.response"
-        minSdk = 23 // Use the Flutter defined version
-        targetSdk = flutter.targetSdkVersion // Use the Flutter defined version
-        versionCode = flutter.versionCode
-        versionName = flutter.versionName
+        applicationId "brooke2384.com.sentry" // Your new package name
+        minSdk 23
+        targetSdk flutter.targetSdkVersion // Use the Flutter-defined version
+        versionCode flutter.versionCode
+        versionName flutter.versionName
     }
 
     buildTypes {
         release {
-            signingConfig = signingConfigs.debug // Update this with your release signing config
+            signingConfig signingConfigs.debug // Change to your actual signing key for production
         }
     }
 }
@@ -41,8 +40,8 @@ flutter {
 
 dependencies {
     // Firebase BOM for dependency management
-    implementation platform('com.google.firebase:firebase-bom:33.4.0') // Use the latest compatible version
-    implementation 'com.google.firebase:firebase-analytics' // Add any other Firebase dependencies you need
+    implementation platform('com.google.firebase:firebase-bom:33.10.0') // Use latest BOM
+    implementation 'com.google.firebase:firebase-analytics' // Add required Firebase dependencies
 
-    // Add other dependencies here
+    // Other dependencies can be added below
 }
