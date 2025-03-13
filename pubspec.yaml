@@ -35,6 +35,8 @@ dependencies:
   http: ^1.0.0  # For making HTTP requests
   shared_preferences: ^2.0.15  # For storing tokens locally
   flutter_secure_storage: ^9.2.2 # For storing tokens securely (optional)
+  flutter_svg: ^2.0.9  # For displaying SVG images
+  font_awesome_flutter: ^10.6.0  # For social media icons
 
   # Firebase Core
   firebase_core: ^3.12.1
@@ -76,7 +78,7 @@ dependencies:
 
   google_maps_flutter: ^2.0.6
   url_launcher: ^6.1.2
-  location: ^6.0.2
+  location: ^8.0.0
   geolocator: ^13.0.1
   permission_handler: ^11.3.1
   geocoding: ^3.0.0
@@ -113,18 +115,15 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/welcome.jpg
-    - assets/images/welcomeScreen.png
-    - assets/images/logos/Responda.png
-    - assets/images/logos/Responda_Dark.png
+    - assets/images/
+    - assets/logo/sentry_logo.svg
     - assets/loading.png
     - assets/profile_image.jpg
-    - assets/Responda.png
     - assets/icons/Chat.png
     - assets/icons/Home.png
     - assets/icons/google.png
     - assets/icons/user.png
-    - assets/images/product.jpg
+    
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart'; // For token storag
 
 class ApiService {
   // Base URL of your API
-  final String baseUrl = 'https://responda.frobyte.ke/api';
+  final String baseUrl = 'https://Sentry.frobyte.ke/api';
   // final String baseUrl = 'https://37e0-41-215-97-85.ngrok-free.app/api';
 
   // Login method for email/password
@@ -122,3 +122,4 @@ class ApiService {
   //   await prefs.remove('authToken');
   // }
 }
+

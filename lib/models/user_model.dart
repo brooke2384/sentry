@@ -5,8 +5,7 @@ class UserModel {
 
   String dateOfBirth;
   String residence;
-  String emergencyContactName;
-  String emergencyContactNumber;
+  EmergencyContact? emergencyContact;
   String allergyType;
   bool hasAllergy;
   String medicineTaken;
@@ -18,32 +17,33 @@ class UserModel {
     required this.email,
     required this.dateOfBirth,
     required this.residence,
-    required this.emergencyContactName,
-    required this.emergencyContactNumber,
+    this.emergencyContact,
     required this.allergyType,
     required this.hasAllergy,
     required this.medicineTaken,
     required this.isTakingMedicine,
   });
 
-  // Convert from Firestore snapshot to UserModel
   factory UserModel.fromFirestore(Map<String, dynamic> data) {
     return UserModel(
-      userId: data['userId'],
-      username: data['username'],
-      email: data['email'],
-      dateOfBirth: data['date_of_birth'],
-      residence: data['residence'],
-      emergencyContactName: data['emergency_contact_name'],
-      emergencyContactNumber: data['emergency_contact_number'],
-      allergyType: data['allergy_type'],
+      userId: data['userId'] ?? '',
+      username: data['username'] ?? '',
+      email: data['email'] ?? '',
+      dateOfBirth: data['date_of_birth'] ?? '',
+      residence: data['residence'] ?? '',
+      emergencyContact: data['emergency_contact'] != null
+          ? EmergencyContact(
+              name: data['emergency_contact']['name'] ?? '',
+              phone: data['emergency_contact']['phone'] ?? '',
+            )
+          : null,
+      allergyType: data['allergy_type'] ?? '',
       hasAllergy: data['has_allergy'] ?? false,
-      medicineTaken: data['medicine_taken'],
+      medicineTaken: data['medicine_taken'] ?? '',
       isTakingMedicine: data['is_taking_medicine'] ?? false,
     );
   }
 
-  // Convert UserModel to JSON for Firestore
   Map<String, dynamic> toJson() {
     return {
       'userId': userId,
@@ -51,12 +51,28 @@ class UserModel {
       'email': email,
       'date_of_birth': dateOfBirth,
       'residence': residence,
-      'emergency_contact_name': emergencyContactName,
-      'emergency_contact_number': emergencyContactNumber,
+      'emergency_contact': emergencyContact?.toJson(),
       'allergy_type': allergyType,
       'has_allergy': hasAllergy,
       'medicine_taken': medicineTaken,
       'is_taking_medicine': isTakingMedicine,
+    };
+  }
+}
+
+class EmergencyContact {
+  final String name;
+  final String phone;
+
+  EmergencyContact({
+    required this.name,
+    required this.phone,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'phone': phone,
     };
   }
 }
